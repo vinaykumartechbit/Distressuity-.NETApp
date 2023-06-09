@@ -1,0 +1,400 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg3.jpg');
+        background-size: cover;
+    }
+</style>
+<div class="my-profile" style="margin-top:80px">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 section-title2 special-bg text-center">
+                            <h3>My Profile</h3>
+                            <div class="heading-border"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="my-profile-clear" style="overflow:hidden">
+                                <form role="form" class="spacer-bottom-20 ng-pristine ng-pending" name="ProfileForm">
+                                    <div class="col-md-12">
+                                        <div class="form-group text-center">
+                                            <div class="image-uploader-box">
+                                                <div class="uploaded-image-preview">
+                                                    <img ng-if="profile.ImageFile" ngf-src="profile.ImageFile" onerror="this.onerror = null; this.src = '../images/superman.jpg'; this.style = 'width: 284px; height:284px'"
+                                                         width="284" class="image-uploader-img border-radius-5" />
+                                                    <img ng-src="/api/Public/GetFileStream?filename={{profile.PictureUrl}}&id=0&w=284&h=284" ng-if="!profile.ImageFile" onerror="this.onerror = null; this.src = '../images/error-image.jpg'; this.style = 'width: 284px; height:284px'"
+                                                         class="image-uploader-img border-radius-5" />
+                                                </div>
+                                                <span class="text-center upload-button-container" style="display:block">
+                                                    <div class=" image-preview-input text-center">
+                                                        <input type="file" accept="image/*" ng-model="profile.ImageFile" data-ng-file="profile.ImageFile" />
+                                                        <span class="image-preview-input-title">Choose an Image</span>
+                                                        <p><small>Browse any Photo of type JPG, PNG &amp; GIF</small></p>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-normal">First Name:</label>
+                                            <input type="text" autofocus="autofocus" required-error-message="Required" validator="required" name="profile.FirstName"
+                                                   class="form-control ng-pristine ng-binding ng-pending ng-not-empty ng-touched" ng-bind="profile.FirstName" ng-model="profile.FirstName" />
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-normal">Last Name:</label>
+                                            <input type="text" required-error-message="Required" validator="required" name="profile.LastName"
+                                                   class="form-control ng-pristine ng-binding ng-pending ng-not-empty ng-touched" ng-bind="profile.LastName" ng-model="profile.LastName" />
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-normal">Email:</label>
+                                            <input type="text" required-error-message="Required" validator="required" name="profile.Email" readonly=""
+                                                   class="form-control ng-pristine ng-binding ng-pending ng-not-empty ng-touched" ng-bind="profile.Email" ng-model="profile.Email" />
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-normal">Industry:</label>
+                                            <select ng-options="item.IndustryId as item.Name for item in industries" ng-model="profile.IndustryId"
+                                                    name="Industry" required-error-message="Required" validator="required"
+                                                    class="form-control ng-pristine ng-pending ng-not-empty ng-touched">
+                                                <option value="" selected="selected" class="">
+                                                    Choose...
+                                                </option>
+                                                <option label="Art" value="number:1" selected="selected">Art</option>
+                                                <option label="Computer Software"
+                                                        value="number:3">
+                                                    Computer Software
+                                                </option>
+                                            </select><span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Summary:</label>
+                                            <textarea class="form-control resize-vertical ng-pristine ng-untouched ng-valid ng-binding ng-not-empty"
+                                                      ng-bind="profile.Summary" ng-model="profile.Summary">
+                                                Summary
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Expertise:</label>
+                                            <textarea class="form-control resize-vertical ng-pristine ng-untouched ng-valid ng-binding ng-not-empty"
+                                                      ng-bind="profile.Specialists" ng-model="profile.Specialists">
+                                                Speacialist
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-md-12">
+                                    <div class="add-position-data">
+                                        <div ng-hide="data.IsShow">
+                                            <h3 class="margin-bottom-10" style="margin-top:0; font-weight: bolder;">Your Multiple Positions</h3>
+                                        </div>
+
+                                        <div ng-repeat="data in profile.UserPositions | filter : {IsDeleted:false}" ng-init="data.IsShow=false">
+                                            <hr>
+                                            <form ng-hide="data.IsShow" class="job-detail">
+                                                <div class="form-group">
+                                                    <p><strong>Company Name:</strong>{{data.CompanyName}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p><strong>Title:</strong> {{data.Title}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p><strong>Location:</strong> {{data.Location}}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p>
+                                                        <strong ng-repeat="val in months | filter : {id: data.StartMonth}:true">
+                                                            {{ val.name }},
+                                                            {{data.StartYear}}
+                                                        </strong> to
+                                                        <strong ng-repeat="val in months | filter : {id: data.StartMonth}:true" ng-if="data.EndYear != '' && data.EndYear != null">
+                                                            {{val.name}},
+                                                            {{data.EndYear}}
+                                                        </strong>
+                                                        <strong ng-if="data.EndYear == '' || data.EndYear == null" class="view-data"> I currenltly work here </strong>
+                                                    </p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p>
+                                                        {{data.Description}}
+                                                    </p>
+                                                </div>
+                                            </form>
+
+                                            <div class="add-position-action-button" ng-hide="data.IsShow">
+                                                <a href="#" prevent-default class="btn btn-success" ng-click="data.IsShow = true; EditPosition(data);"> <i class="fa fa-edit"></i> | Edit</a>
+                                                <a href="#" prevent-default class="btn btn-danger" ng-click="DeleteUserPosition(data)"> <i class="fa fa-trash"></i> | Remove</a>
+                                            </div>
+
+                                            <div ng-if="data.IsShow" class="job-detail">
+                                                <div class="title-700">
+                                                    <span>View Position</span>
+                                                </div>
+                                                <form role="form" name="EditForm">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="abc">Company Name</label>
+                                                            <input name="CompanyName" ng-model="data.CompanyName" required-error-message="Required" validator="required" type="text" class="form-control" placeholder="Comapny Name" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="abc">Title</label>
+                                                            <input type="text" name="Title" required-error-message="Required" validator="required" ng-model="data.Title" class="form-control" placeholder="Title" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="abc">Location</label>
+                                                            <input type="text" class="form-control" ng-model="data.Location" placeholder="Location" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="abc">Time Period</label>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="label-subtitle">From</div>
+                                                                    <div class="double-form">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 right-padding">
+                                                                                <select ng-model="data.StartMonth" ng-options="item.id as item.name for item in months" name="StartMonth" required-error-message="Required" validator="required" class="form-control">
+                                                                                    <option value="" selected="selected">Choose...</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 border-left">
+                                                                                <input type="text" name="StartYear" ng-bind="data.StartYear" required-error-message="Required" validator="required" ng-model="data.StartYear" class="form-control" placeholder="Year" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="label-subtitle">to</div>
+                                                                    <div class="double-form" ng-if="!data.IsCurrent">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 right-padding">
+                                                                                <select ng-model="data.EndMonth" ng-options="item.id as item.name for item in months" class="form-control" name="EndMonth" required-error-message="Required" validator="required">
+                                                                                    <option value="" selected="selected">Choose...</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 border-left">
+                                                                                <input type="text" name="EndYear" ng-bind="data.EndYear" required-error-message="Required" validator="required" ng-model="data.EndYear" class="form-control" placeholder="Year" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="checkbox-color">
+                                                                        <input type="checkbox" ng-checked="data.IsCurrent" ng-click="EditCheckIsCurrent(data);" ng-model="data.EndYearDiv" />
+                                                                        <label>I currenltly work here</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="abc">Description</label>
+                                                            <textarea class="form-control resize-vertical" ng-model="data.Description" value="{{data.Description}}" placeholder="Description"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="action-button">
+                                                            <a href="#" prevent-default class="btn btn-success" validation-submit="EditForm" ng-click="UpdateSelectedPosition(data); data.IsShow = false;"> <i class="fa fa-save"></i> | Save</a>
+                                                            <a href="#" prevent-default class="btn btn-danger new-position-close-button" ng-click=" CancelPositionEdit(data); data.IsShow = false;"> <i class="fa fa-close"></i> | Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <p class="add-position-btn-v2" ng-show="!AddPosition"> <a href="#" validation-reset="userPositionForm" ng-click="AddPosition = true" class="btn btn-info"><i class="fa fa-plus"></i> Add Position</a></p>
+                                </div>
+
+                                <!--<div class="col-md-12" ng-show="!AddPosition">
+                                    <div class="add-positions-button pull-right">
+                                        <p>Add Position <a href="#" validation-reset="userPositionForm" ng-click="AddPosition = true" class="btn btn-info"><i class="fa fa-plus"></i> </a></p>
+                                    </div>
+                                </div>-->
+                                <div class="clearfix"></div>
+                                <!-- Add Position Form -->
+                                <div class="col-md-12 margin-top-10">
+                                    <div ng-show="AddPosition" class="add-position">
+                                        <form role="form" name="userPositionForm" class="">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="abc">Comapny Name</label>
+                                                    <input name="CompanyName" required-error-message="Required" validator="required" ng-model="newUserPosition.CompanyName" class="form-control" placeholder="Comapny Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="abc">Title</label>
+                                                    <input type="text" name="Title" required-error-message="Required" validator="required" ng-model="newUserPosition.Title" class="form-control" placeholder="Title">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="abc">Location</label>
+                                                    <input type="text" ng-model="newUserPosition.Location" class="form-control" placeholder="Location">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="abc">Time Period</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="label-subtitle">From</div>
+                                                            <div class="double-form">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 right-padding">
+                                                                        <select ng-options="item.id as item.name for item in months" ng-model="newUserPosition.StartMonth" name="StartMonthName" required-error-message="Required" validator="required" class="form-control">
+                                                                            <option value="" selected="selected">Choose...</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 border-left">
+                                                                        <input type="text" name="StartYear" required-error-message="Required" validator="required" ng-model="newUserPosition.StartYear" class="form-control" placeholder="Year">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                            <div class="label-subtitle">to</div>
+                                                            <div class="double-form" ng-if="!newUserPosition.IsCurrent">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 right-padding">
+                                                                        <select ng-options="item.id as item.name for item in months" ng-model="newUserPosition.EndMonth" class="form-control" name="EndMonthName" required-error-message="Required" validator="required">
+                                                                            <option value="" selected="selected">Choose...</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6 border-left">
+                                                                        <!--<input type="text" class="form-control" placeholder="Year">-->
+                                                                        <input type="text" name="EndYear" required-error-message="Required" validator="required" ng-model="newUserPosition.EndYear" class="form-control" placeholder="Year">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="checkbox-theme checkbox-color">
+                                                                <!--<input id="checkbox1" class="styled" type="checkbox">-->
+                                                                <input type="checkbox" class="styled" ng-click="CheckIsCurrent(newUserPosition.IsCurrent)" ng-model="newUserPosition.IsCurrent" id="checkbox1">
+                                                                <label for="checkbox1" class="arrow-label">I currenltly work here</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="abc">Description</label>
+                                                    <textarea ng-model="newUserPosition.Description" class="form-control" placeholder="Description"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="col-md-12">
+                                            <div class="add-position-action-button pull-right">
+                                                <a href="#" prevent-default class="btn btn-success" validation-submit="userPositionForm" ng-click="AddUserPosition()"> <i class="fa fa-save"></i> | Add</a>
+                                                <a href="#" prevent-default class="btn btn-danger new-position-close-button" ng-click="AddPosition = false; newUserPosition={}"> <i class="fa fa-close"></i> | Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-12">
+                                    <form role="form" name="ChangePassword" class="">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="abc">Old Password</label>
+                                                <input type="password" name="OldPassword" required-error-message="Required" validator="required"
+                                                       ng-model="changePassword.OldPassword" class="form-control" placeholder="Old Password" autocomplete="off"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="abc"> New Password</label>
+                                                <input type="password" name="NewPassword" required-error-message="Required" validator="required"
+                                                       ng-model="changePassword.NewPassword" class="form-control" placeholder="New Password" autocomplete="off" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="abc">Confirm Password</label>
+                                                <input type="password" name="ConfirmPassword" tabindex="1" class="form-control" placeholder="Confirm Password"
+                                                       id="ConfirmPassword" data-pwd="{{changesPassword.NewPassword}}" ng-model="changePassword.ConfirmPassword"
+                                                       validator="confirmpassword,passwordlength" autocomplete="off" />
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <input type="button" value="Change Password" validation-submit="ChangePassword" ng-click="NewPassword($event)"
+                                           data-style="expand-right" data-size="l" class="btn btn-success ladda-button" />
+                                </div>-->
+
+                                <div class="col-md-12">
+                                    <div class="margin-top-10">
+                                        <input type="button" value="Save" validation-submit="ProfileForm" validation-reset="ProfileForm" ng-click="UpdateUserProfile($event)"
+                                               data-style="expand-right" data-size="l" class="btn btn-success ladda-button">
+                                        <input validation-reset="ChangePassword" type="button" class="btn btn-success" data-toggle="modal" data-target="#changePasswordModal" value="Change Password">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="changePasswordModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Change Password</h4>
+                    </div>
+                    <form role="form" name="ChangePassword" class="margin-top-10">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="abc">Old Password</label>
+                                <input type="password" name="OldPassword" required-error-message="Required" validator="required"
+                                       ng-model="changePassword.OldPassword" class="form-control" placeholder="Old Password" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="abc"> New Password</label>
+                                <input type="password" name="NewPassword" required-error-message="Required" validator="required"
+                                       ng-model="changePassword.NewPassword" class="form-control" placeholder="New Password" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="abc">Confirm Password</label>
+                                <input type="password" name="ConfirmPassword" tabindex="1" class="form-control" placeholder="Confirm Password"
+                                       id="ConfirmPassword" data-pwd="{{changesPassword.NewPassword}}" ng-model="changePassword.ConfirmPassword"
+                                       validator="confirmpassword,passwordlength" autocomplete="off" />
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="popup-footer-buttons">
+                        <input type="button" value="Change Password" validation-submit="ChangePassword" ng-click="NewPassword($event)"
+                               data-style="expand-right" data-size="l" class="btn btn-success ladda-button" />
+                        <input type="button" value="Close" ng-click="CloseChangePassword()" class="btn btn-danger" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

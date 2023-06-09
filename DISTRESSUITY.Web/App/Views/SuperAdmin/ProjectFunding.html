@@ -1,0 +1,205 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg-main.jpg');
+        /*background-size: cover;*/
+    }
+</style>
+<div class="my-investment-page" style="margin-top:80px" ng-cloak>
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="row">
+                <div class="col-md-12 text-center" ng-if="!NoProjectAdded">
+                    <div class="tab-description tab-description1 ">
+                        <h3>Project Fundings</h3>
+                        <p style="font-size: 18px;margin-bottom: 30px;">See a list of all fundings.</p>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="table-responsive margin-top-25">-->
+            <div class="row" ng-if="NoRecordFound == false">
+                <div class="col-md-12">
+                    <div class="panel investment-table-panel custab">
+                        <div class="panel-body">
+                            <table class="table table-striped  mt-20">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">Invested By</th>
+                                        <th width="10%">Invested Amount</th>
+                                        <th width="10%">Transaction Charges</th>
+                                        <th width="10%">Total amount</th>
+                                        <th width="20%">Invested Date</th>
+                                        <th width="20%">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in ProjectFunding">
+                                        <td width="20%">
+                                            <span class="user-data">{{data.InvestedBy}}</span>
+                                        </td>
+                                        <td width="10%">$<span ng-bind="({{data.FundingAmount}}).toLocaleString()"></span></td>
+                                        <td width="10%">$<span ng-bind="({{data.ProcessingFees}}).toLocaleString()"></span></td>
+                                        <td width="10%">$<span ng-bind="({{data.TotalAmount}}).toLocaleString()"></span></td>
+                                        <td width="20%"><span ng-bind="fundingDate(data.FundingDate)" /></td>
+                                        <td width="20%">
+                                            <div class="status-icon status-icon-orange" ng-if="data.StatusId == 4" title="{{data.Status.Name}}"></div>
+                                            <div class="status-icon status-icon-black" ng-if="data.StatusId == 2" title="{{data.Status.Name}}"></div>
+                                            <div class="status-icon status-icon-yellow" ng-if="data.StatusId == 5" title="{{data.Status.Name}}"></div>
+                                            <div class="status-icon status-icon-blue" ng-if="data.StatusId == 6" title="{{data.Status.Name}}"></div>
+                                            <div class="status-icon status-icon-green" ng-if="data.StatusId == 7" title="{{data.Status.Name}}"></div>
+                                            <div class="status-icon status-icon-red" ng-if="data.StatusId == 8" title="{{data.Status.Name}}"></div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        <td><small><strong>$<span ng-bind="(TotalFundingAmount).toLocaleString()"></span></strong></small></td>
+                                        <td><small><strong>$<span ng-bind="(TransactionCharges).toLocaleString()"></span></strong></small></td>
+                                        <td colspan="5"><small><strong>$<span ng-bind="(PaymentReceived).toLocaleString()"></span></strong></small></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div ng-include="'/App/views/Pagination.html'"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!--</div>-->
+            <div class="row" ng-if="NoRecordFound == true">
+                <div class="empty-project-container text-center">
+                    <p class="hero-text ng-binding">We didn't find any funding on this project.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped icons-description-table mt-20">
+                        <thead>
+                            <tr>
+                                <td><strong>Funding Status Codes</strong></td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="status-icon status-icon-green">&nbsp;</div></td>
+                                <td>Funded</td>
+                                <td>Payment is deducted from your credit card.</td>
+
+                            </tr>
+                            <tr>
+                                <td><div class="status-icon status-icon-blue">&nbsp;</div></td>
+                                <td>Approved</td>
+                                <td>Funding is approved by the owner of the project.</td>
+
+                            </tr>
+                            <tr>
+                                <td><div class="status-icon status-icon-orange">&nbsp;</div></td>
+                                <td>Waiting</td>
+                                <td>Waiting for the approval of the owner.</td>
+
+                            </tr>
+                            <tr>
+                                <td><div class="status-icon status-icon-yellow">&nbsp;</div></td>
+                                <td>BackedFunding</td>
+                                <td>Investor retract funding payment before funding date of the project.</td>
+
+                            </tr>
+                            <tr>
+                                <td><div class="status-icon status-icon-red">&nbsp;</div></td>
+                                <td>Failed</td>
+                                <td>Transaction Failed due to some reason.</td>
+
+                            </tr>
+                            <tr>
+                                <td><div class="status-icon status-icon-black">&nbsp;</div></td>
+                                <td>Declined</td>
+                                <td>Funding is declined by the owner of the project.</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-6 project-block-wrapper" ng-repeat="data in MyProjects" ng-if="!NoProjectAdded">
+                <p class="hidden" ng-bind="getFundingPercentage(data)"></p>
+                <a href="#project/{{data.ProjectId}}">
+                    <div class="project-block-container">
+                        <div class="project-image-container hover14 project-block-anchor">
+                            <!--<img src="images/1.jpg" class="project-image-thumbnail" width="100%">
+                            <img onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 328px; height:220px'"
+                                 ng-src="/api/Public/GetFileStream?filename={{data.ImagePath}}&id={{data.ProjectId}}&w=328&h=220">
+                            <div class="image-overlay-text">
+                                <span>{{data.Title}}</span>
+                            </div>
+                            <div class="delete-project-button">
+                                <a href="#" prevent-default class="btn btn-danger pull-right" ng-click="deleteProject(data)"> <i class="fa fa-trash "></i> </a>
+                            </div>
+                        </div>
+                        <div class="project-text-container">
+                            <h4>
+                                <div class="limit-project-Title">
+                                    <span ng-bind="data.Title" />
+                                </div>
+                                <!--<a href="#" class="btn btn-danger pull-right" ng-click="deleteProject(data)">
+                                    <i class="fa fa-trash "></i> | Delete
+                                </a>
+                            </h4>
+                            <div class="clearfix"></div>
+                            <p class="project-description limit-project-description margin-top-5">
+                                <span ng-bind="data.ShortDescription" />
+                            </p>
+                            <p><i class="fa fa-tags"></i> <span ng-bind="data.Industry.Name" /></p>
+                            <p>
+                                <i class="fa fa-hourglass-o"></i>
+
+                                <span class="label label-danger" ng-if="data.StatusId == 1" ng-bind="data.Status.Name" />
+                                <span class="label label-danger" ng-if="data.StatusId == 2" ng-bind="data.Status.Name" />
+                                <span class="label label-success" ng-if="data.StatusId == 3" ng-bind="data.Status.Name" />
+                                <span class="label label-warning" ng-if="data.StatusId == 4" ng-bind="data.Status.Name" />
+
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+                                     aria-valuemax="100" style="width:{{TotalFundingInPercent}}"></div>
+                            </div>
+                            <div class="project-footer">
+                                <p class="pull-left"><i class="fa fa-line-chart"></i> <span ng-bind="TotalFundingInPercent" /> Completed</p>
+                                <p class="pull-right" ng-if="data.StatusId == 3"><i class="fa fa-calendar"></i> <span ng-bind="data.FundingDuration" /> Days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div ng-if="NoProjectAdded">
+                <div class="col-md-12">
+                    <div class="empty-project-container text-center">
+                        <img src="../../../images/error-chracter.png" width="40%">
+                        <p class="hero-text">You have not added any projects so far</p>
+                        <a href="#project" class="btn btn-info e-add-project-btn">
+                            Add Projects
+                        </a>
+                        <p class="e-my-project-description">
+                            A project represent a business idea and make
+                            sure you add full details including any video, images, equity offered and total funding required.
+                            Investors are interested to see you ideas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center load-more-button">
+                <a href="" ng-show="ShowLoadMore" ng-click="loadMoreProjects($event)" class="hvr-float-shadow ladda-button" data-style="expand-right" data-size="l">Load More</a>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,127 @@
+﻿<link href="../../../Content/bootstrap-social/bootstrap-social.css" rel="stylesheet" />
+<style type="text/css">
+    body {
+        background-position: 0 -353px;
+        background-image: url('../../../images/login-bg.jpg');
+        background-size: cover;
+    }
+</style>
+
+<div class="container login-screen min-height-login-signup ">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login margin-top-130px">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="active" id="login-form-link">Login</span>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="login-form" action="" method="post" role="form" name="loginForm">
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username or Email" ng-model="Login.UserName"
+                                           required-error-message="Required" validator="required,email" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password"
+                                           ng-model="Login.Password" required-error-message="Required" validator="required,passwordlength">
+                                </div>
+                                <div class="form-group ">
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="text-right">
+                                                <a href="#forgetpassword" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="form-control btn btn-login ladda-button" ng-click="loginUser($event)" validation-submit="loginForm"
+                                               data-style="expand-right" data-size="l">Sign In</button>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <a class="btn btn-block btn-social btn-linkedin linkedin-btn" ng-click="externalLoginUser('LinkedIn')">
+                                                <i class="fa fa-linkedin padding-left-right-0"></i> Sign in with LinkedIn
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="text-center">
+                                                Don't Have an Account? <a href="#signup" tabindex="5" class=" text-info" id="register-form-link">Sign Up Here</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="page-content">
+    <div class="container login-screen">
+        <div class="panel panel-blue-theme panel-login">
+            <div class="panel-heading"><h4><i class="fa fa-lock"></i> Log In</h4></div>
+            <div class="panel-body">
+                <form name="loginForm">
+                    <div class="form-group">
+                        <label class="text-normal">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user icolor"></i></span>
+                            <input class="form-control" placeholder="UserName" name="UserName" ng-model="Login.UserName" required-error-message="Required" validator="required,email" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock icolor"></i></span>
+                            <input class="form-control" placeholder="Password" name="password" ng-model="Login.Password" required-error-message="Required" validator="required,passwordlength" type="password">
+                        </div>
+                    </div>
+                </form>
+                <a ng-click="loginUser($event)" validation-submit="loginForm" class="btn  btn-peacock btn-md pull-left ladda-button" data-style="expand-right" data-size="l">Log in</a>
+                <a href="#forgetpassword" class="pull-right">Forgot Password</a>
+                <div class="clearfix"></div>
+                <hr class="divider" style="border-top: 1px solid black !important" />
+                <div class="text-center">
+                    <a ng-click="externalLoginUser('LinkedIn')" class="btn btn-block btn-social btn-linkedin linkedin-btn"><span class="fa fa-linkedin"></span>Sign in with LinkedIn</a>
+                </div>
+                <div class="text-center mt20"><a href="#signup"><span style="text-decoration:underline">SignUp</span> if not registered user</a></div>
+                <!--<a href="my-profile.html" class="btn  btn-peacock btn-md pull-right">Log in</a>--a>
+            </div>
+        </div>
+
+    </div>
+</div>
+-->

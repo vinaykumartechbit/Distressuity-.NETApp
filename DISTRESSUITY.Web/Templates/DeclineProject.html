@@ -1,0 +1,72 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var date = new Date();
+            $('.year').text(date.getFullYear());
+        })
+    </script>
+</head>
+
+<body style="margin:0;padding:0">
+    <div class="header navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="custom-nav navbar navbar-inverse header-padding">
+                    <div class="row m">
+                        <div class="col-md-4 col-sm-6">
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <div class="logo text-center" style="background:#222222;padding:10px;text-align:center">
+                                <a href="http://distressuity.techbitsolution.com/#/" target="_blank"><img src="http://distressuity.techbitsolution.com/images/logo.png" width="200" /></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="mail-body" style="padding:20px">
+
+        <p>
+            Hi <b>{FirstName} {LastName}</b>,
+        </p>
+        <p class="padding-left-right-10">
+            This is to inform you that yout idea doesnot seems matching our criteria. Our team has declined your project. You can view details in your messages.
+			<!--<a style="color:#00c5fe;" href="http://distressuity.techbitsolution.com/#/messages"> messages </a>.-->
+        </p>
+        <p>
+            <b>Note :</b>
+            You can change your idea and submit it again. To open project click the button below.
+			
+        </p>
+		<a href="http://distressuity.techbitsolution.com/#/project/{EncryptedProjectId}" style="background: #00c5fe;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;">Change Idea</a>
+        <p>
+            Regards,
+            <br />
+            Distressuity Team
+        </p>
+    </div>
+    <hr style="margin-top:0" />
+    <div class="footer">
+        <div class="pull-right" style="text-align:center">
+            <b style="padding-left:20px">
+                &#169; Distressuity, <span class="year"></span>. All Rights Reserved.
+            </b>
+        </div>
+    </div>
+
+</body>
+</html>

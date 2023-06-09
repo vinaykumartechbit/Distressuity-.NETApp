@@ -1,0 +1,317 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg3.jpg');
+        background-size: cover;
+    }
+</style>
+
+
+<div class="detailes-section-container" ng-cloak>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="detailes-content-container">
+                    <div class="project-details-header text-center">
+                        <h2><span ng-bind="ProjectDetail.ProjectTitle"></span> </h2>
+                        <p>
+                            <span ng-bind="ProjectDetail.ShortDescription"></span>
+                        </p>
+                        <div class="video-thumbnail position-relative" ng-hide="VideoPlayed" ng-click="playVideo()">
+                            <img ng-src="/api/Public/GetFileStream?filename={{ProjectDetail.ImagePath}}&id=0&w=560&h=315" onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width:400px;height:300px'" width="100%" height="400">
+                            <div class="thumbnail-overlay"></div>
+                            <div class=" videoplay-button" ng-if="ProjectDetail.VideoName!=null"><div class="play-button">Play Now | <i class="fa fa-play-circle"></i></div></div>
+                        </div>
+                        <div ng-hide="!VideoPlayed" class="hidden project-video">
+                            <video width="100%" height="400" class="embed-responsive-item mejs-player" preload="none" controls>
+                                <source src="" ng-src="{{ProjectDetail.VideoPath}}" type="video/mp4">
+                                <source src="" ng-src="{{ProjectDetail.VideoPath}}" type="video/webm">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="card project-details-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#overview" prevent-default aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+                            <li role="presentation"><a href="#media" aria-controls="media" prevent-default role="tab" data-toggle="tab">Media</a></li>
+                            <li role="presentation"><a href="#breakdown" aria-controls="breakdown" prevent-default role="tab" data-toggle="tab">Breakdown</a></li>
+                            <li role="presentation"><a href="#messages" aria-controls="messages" prevent-default role="tab" data-toggle="tab">Messages</a></li>
+
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="overview">
+                                <div class="business-idea-description" ng-bind-html="ProjectDetail.Description">
+                                </div>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane custyle" id="media">
+                                <div class="section-title">
+                                    <h3>Media</h3>
+                                </div>
+                                <table width="100%" border="0" class="table table-striped custab" ng-if="ProjectDetail.ProjectDocuments !=''">
+                                    <tr>
+                                        <td>File Name</td>
+                                        <td>File Size</td>
+                                        <td>Actions</td>
+                                    </tr>
+                                    <tr ng-repeat="data in ProjectDetail.ProjectDocuments">
+                                        <td><span ng-model="data.DocumentName" ng-bind="data.DocumentName"></span></td>
+                                        <td class="user-sub-data"> <span ng-bind="data.DocumentSize"></span></td>
+                                        <!--<td class="manage-section"><!--<a href="{{data.DocumentPath}}" target="_blank" class="fa fa-download"></a></td>-->
+                                        <td class="manage-section"><a href="{{data.DocumentPath}}" class="fa fa-download" target="_blank" download></a></td>
+                                    </tr>
+
+                                </table>
+
+
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="breakdown">
+                                <div class="section-title">
+                                    <h3>Breakdown</h3>
+                                </div>
+                                <table width="100%" border="0" class="table table-striped custab">
+                                    <tr ng-repeat="data in ProjectDetail.FinancialBreakdowns">
+                                        <td ng-bind="data.Title"></td>
+                                        <td>$<span ng-bind="({{data.Amount}}).toLocaleString()"></span></td>
+
+                                    </tr>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+                                <section class="content">
+                                    <div class="">
+                                        <div class="table-container">
+                                            <table class="table table-filter">
+                                                <tbody>
+                                                    <tr ng-repeat="publicMessage in ProjectDetail.PublicMessages">
+                                                        <td ng-if="!publicMessage.IsDeleted">
+                                                            <div class="media">
+                                                                <a href="#" prevent-default class="pull-left">
+                                                                    <img ng-src="/api/Public/GetFileStream?filename={{publicMessage.UserModel.PictureUrl}}&id=0&w=50&h=50"
+                                                                         class="media-photo" onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width:50px;height:50px'" />
+                                                                    <!--<img ng-src="{{publicMessage.UserModel.PictureUrl}}" class="media-photo">-->
+                                                                </a>
+                                                                <div class="media-body">
+                                                                    <span class="media-meta pull-right" ng-bind="formatCommentDate(publicMessage.CreatedDate)"></span>
+                                                                    <h4 class="title">  <span ng-bind="publicMessage.UserModel.FirstName" /> <span ng-bind="publicMessage.UserModel.LastName" /></h4>
+                                                                    <p class="summary" ng-bind-html="publicMessage.MessageBody"></p>
+                                                                    <div ng-if="IfLoggedInUserIsProjectOwner || publicMessage.UserModel.Id == User.Id ">
+                                                                        <a href="javascript:void(0)" class="btn btn-danger pull-right" ng-click="deletePublicMessage(publicMessage, $index)">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="isUserAuthenticated==true" class="new-message-area">
+                                        <div style="width: 100%;">
+                                            <textarea id="newPublicMessage" style="width: 100%; height:100px;"></textarea>
+                                        </div>
+                                        <a class="btn btn-info ladda-button" href="#" ng-click="addPublicMessage($event)" prevent-default data-style="expand-right" data-size="l">
+                                            <i class="fa fa-send"></i> Send
+                                        </a>
+                                    </div>
+                                    <div ng-show="isUserAuthenticated==false" class="new-message-area">
+                                        <label>
+                                            You must be logged in before send message. <a href="#login">Log In</a>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sidebar-container">
+                    <div class="progress-bar-container">
+                        <div class="progress-circle">
+                            <section class="text-center">
+                                <div id="FundingPercentage" ng-bind="getFundingPercentage(ProjectDetail)" class="hidden" value="{{TotalFundingInPercent}}"></div>
+                                <div id="example1" class="example" value="{{TotalFundingInPercent}}"></div>
+                            </section>
+                        </div>
+                        <div class="progress-text">
+                            <p class="project-fund-done">
+                                <strong ng-bind="getFundingPercentage(ProjectDetail)"></strong><strong>% Done</strong> of total Investment
+                                <br><strong><span style="font-size:42px">$<span ng-bind="({{ProjectDetail.InvestmentAmount}}).toLocaleString()"></span></span></strong>
+                            </p>
+                        </div>
+                        <p class="text-center project-days">Valid till <strong><span ng-bind="ValidTill" /></strong></p>
+                        <div class="project-stats-info">
+                            <div class="equity">
+                                <p><span ng-bind="ProjectDetail.EquityOffered" />% Equity Done</p>
+                            </div>
+                            <div class="investors">
+                                <p><span ng-bind="ProjectDetail.ProjectFundings.length" /> Investors</p>
+                            </div>
+                            <div class="pledged">
+                                <p>$<span ng-bind="({{TotalPledged}}).toLocaleString()"></span> Total Pledged</p>
+                            </div>
+                        </div>
+                        <div class="row detail-sidebar-buttons">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="invest-now-button" ng-if="!IfLoggedInUserIsProjectOwner && $root.userRole.toLowerCase() != 'admin'">
+                                    <a href="#payments/{{ProjectDetail.ProjectId}}" class="btn btn-info btn-lg" ng-if="!AlreadyInvested"><i class="fa fa-check"></i> Invest Now</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="invest-now-button" ng-if="AlreadyInvested && !FundingDateOver">
+                                    <a class="btn btn-danger btn-lg" href="javascript:void(0)" ng-click="backItFunding(ProjectDetail.ProjectId)"><i class="fa fa-undo"></i> Retract</a>
+
+                                    <br />
+                                    <div ng-if="userInvestment.Result.StatusId == 4" class="backit-text">
+                                        Approval pending from the entrepreneur since <strong><span ng-bind="UserFundindDate" /></strong> ,
+                                        but you can still Backit your idea.
+                                    </div>
+                                    <div ng-if="userInvestment.Result.StatusId == 6" class="backit-text">
+                                        Your investment is approved by entrepreneur on <strong> <span ng-bind="UserFundindDate" /> </strong> but its still not funded. You can still
+                                        withdraw from your idea by clicking Backit button till <strong> <span ng-bind="ValidTill" /></strong> .
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="invest-now-button  backit-text" ng-if="userInvestment.Result.StatusId == 6 && FundingDateOver">
+                                    <div>
+                                        Your investment has been funded to the entrepreneur on <strong> <span ng-bind="ValidTill" /> </strong> and you have to wait for the reward once the project is
+                                        successful. Project owner will get in touch with you.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-container" ng-if="ProjectDetail.User">
+                    <div class="user-profile">
+                        <div class="profile-sidebar">
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <div class="profile-user-info padding-10 ">
+                                        <div class="user-image display-i-b v-a-t text-center">
+                                            <img class="img-circle" ng-src="/api/Public/GetFileStream?filename={{ProjectDetail.User.PictureUrl}}&id=0&w=70&h=70"
+                                                 onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 70px; height:70px'" data-toggle="dropdown"
+                                                 alt="User Image" role="button" aria-haspopup="true" aria-expanded="true">
+                                            <p class="margin-bottom-0 margin-top-10" ng-if="isUserAuthenticated && !IfLoggedInUserIsProjectOwner"><button validation-reset="newPrivateMessageForm" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newPrivateMessageModal">Send Message</button> </p>
+                                           
+                                        </div>
+                                        <div class="user-name display-i-b ">
+                                            <p class="margin-bottom-0">{{ProjectDetail.User.FirstName}} {{ProjectDetail.User.LastName}}</p>
+                                            <div class="user-image display-i-b margin-top-10">
+                                                <img class="img-circle" ng-src="/api/Public/GetFileStream?filename={{ProjectDetail.LogoPath}}&id=0&w=30&h=30"
+                                                     onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 30px; height:30px'" data-toggle="dropdown"
+                                                     alt="User Image" role="button" aria-haspopup="true" aria-expanded="true">
+                                            </div>
+                                            <div class="user-name display-i-b">
+                                                <p class="margin-bottom-0"><small>{{ProjectDetail.Title}}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           <!-- <div class="profile-userpic">
+                                <img class="img-responsive" ng-src="/api/Public/GetFileStream?filename={{ProjectDetail.LogoPath}}&id=0&w=100&h=100"
+                                     onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 100px; height:100px'" data-toggle="dropdown"
+                                     alt="User Image" role="button" aria-haspopup="true" aria-expanded="true">
+                            
+                            </div>
+                          
+                            <div class="profile-usertitle">
+                                <div class="profile-usertitle-name">
+                                    <span ng-bind="ProjectDetail.User.FirstName" /> <span ng-bind="ProjectDetail.User.LastName" />
+                                </div>
+                               
+                                <div class="profile-usertitle-job">
+                                    <p><i class="fa fa-envelope"></i> <span ng-bind="ProjectDetail.User.Email" /></p>
+                                </div>
+                            </div>
+                         
+                            <div class="profile-userbuttons" ng-if="isUserAuthenticated && !IfLoggedInUserIsProjectOwner">
+                            
+                                <button validation-reset="newPrivateMessageForm" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#newPrivateMessageModal">Send Message</button>
+                            </div>-->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="newPrivateMessageModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Private Message</h4>
+                    </div>
+                    <form role="form" name="newPrivateMessageForm" class="margin-top-10">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="abc">Message</label>
+                                <textarea class="form-control newPrivateMessage" placeholder="Your Message" wrap="hard" style="resize:none" rows="4" name="newMessage"
+                                          required-error-message="Required" validator="required" ng-model="newPrivateMessage" />
+                            </div>
+                        </div>
+                    </form>
+                    <div class="popup-footer-buttons">
+                        <a href="#" prevent-default validation-submit="newPrivateMessageForm" ng-click="AddPrivateMessage($event)"
+                           data-style="expand-right" data-size="l" class="btn btn-success ladda-button">Submit</a>
+                        <a href="#" prevent-default ng-click="CloseNewPrivateMessage()" class="btn btn-danger">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../Scripts/radial-progress-bar.js"></script>
+<script src="../../../Scripts/examples.js"></script>
+<!--<script>
+    // using jQuery
+    debugger;
+    $('video,audio').mediaelementplayer({
+        // if the <video width> is not specified, this is the default
+        defaultVideoWidth: 480,
+        // if the <video height> is not specified, this is the default
+        defaultVideoHeight: 270,
+        // if set, overrides <video width>
+        videoWidth: -1,
+        // if set, overrides <video height>
+        videoHeight: -1,
+        // width of audio player
+        audioWidth: 400,
+        // height of audio player
+        audioHeight: 30,
+        // initial volume when the player starts
+        startVolume: 0.8,
+        // useful for <audio> player loops
+        loop: false,
+        // enables Flash and Silverlight to resize to content size
+        enableAutosize: true,
+        // the order of controls you want on the control bar (and other plugins below)
+        features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume', 'fullscreen'],
+        // Hide controls when playing and mouse is not over the video
+        alwaysShowControls: false,
+        // force iPad's native controls
+        iPadUseNativeControls: false,
+        // force iPhone's native controls
+        iPhoneUseNativeControls: false,
+        // force Android's native controls
+        AndroidUseNativeControls: false,
+        // forces the hour marker (##:00:00)
+        alwaysShowHours: false,
+        // show framecount in timecode (##:00:00:00)
+        showTimecodeFrameCount: false,
+        // used when showTimecodeFrameCount is set to true
+        framesPerSecond: 25,
+        // turns keyboard support on and off for this instance
+        enableKeyboard: true,
+        // when this player starts, it will pause other players
+        pauseOtherPlayers: true,
+        // array of keyboard commands
+        keyActions: []
+    });
+</script>-->

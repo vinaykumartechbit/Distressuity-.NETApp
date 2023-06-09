@@ -1,0 +1,35 @@
+﻿<div class="panel-footer investment-table-footer overflow-h">
+    <!--<div class="row">-->
+        <div ng-hide="TotalPages==1">
+            <!--<div class="page-size">-->
+            <label class="pull-left">Page No:</label>
+            <div class="pull-left">
+                <input class="form-control col-lg-6" style="width:70%" ng-model="GotoPage">
+                <button class="btn btn-default col-lg-6" style="width:30%" ng-click="SetPage(GotoPage)">Go</button>
+            </div>
+            <!--</div>-->
+        </div>
+        <div>
+
+            <!--<div class="page-size">-->
+                <label class="pull-left">Page Size:</label>
+                <div class="pull-left">
+                    <select class="form-control" ng-model="PageSize" ng-change="SetPageSize(PageSize)">
+                        <option value=10 ng-selected="true" selected="selected">10</option>
+                        <option value=50>50</option>
+                        <option value=100>100</option>
+                    </select>
+                </div>
+            <!--</div>-->
+        </div>
+        <!--<div class="col-lg-4 col-md-12 col-sm-12 col-xs-4 screen-480">-->
+            <div class="pull-right">
+                <ul class="pagination pull-right" ng-show="TotalPages > 1">
+                    <li ng-class="{disabled: CurrentPage == 1}"><a ng-click="PrevPage()"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li ng-class="{disabled: n == CurrentPage}" ng-repeat="n in [] | range: TotalPages:CurrentPage"><a ng-click="SetPage(n)">{{n}}</a></li>
+                    <li ng-class="{disabled: CurrentPage >= TotalPages}"><a ng-click="NextPage()"><i class="fa fa-angle-double-right"></i></a></li>
+                </ul>
+            </div>
+        <!--</div>-->
+    <!--</div>-->
+</div>

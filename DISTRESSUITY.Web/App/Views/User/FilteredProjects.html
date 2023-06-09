@@ -1,0 +1,190 @@
+﻿<!--<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="banner-image-text text-center">
+                    <h1 data-wow-iteration="" data-wow-duration=".5s" class="wow slideInRight">
+                        <span>
+                            Easily find investors
+                        </span><br> for your Startup or Invest into someone's idea
+                    </h1>
+
+                    <a data-wow-iteration="" data-wow-duration="1s" href="#signup" class="btn btn-info btn-lg wow bounceInDown" data-ng-if="!isAuthenticated.isAuth"> Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<div ng-cloak>
+    <div style="margin-top:80px">
+        <div class="projects" ng-if="NoFeaturedProject==false">
+            <div class=" container">
+                <div class="row">
+                    <div class="col-md-12 section-title2">
+                        <h3 class="section-titile2-head">Featured Projects</h3>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="center-block text-center text-danger" ng-show="FeaturedMessage">
+
+                        <img src="../../../images/error-chracter.png" width="40%">
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-6 project-block-wrapper" ng-repeat="data in FeaturedProjectList">
+                        <div class="project-block-container">
+                            <div class="featured-tag">
+                                <img src="../../images/featured-3.png">
+                            </div>
+                            <a href="#projectdetail/{{data.ProjectId}}" ng-click="deductFeaturedClick(data.ProjectId)" class="project-block-anchor">
+                                <div class="project-image-container" style="min-height: 220px;">
+                                    <img onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 338px; height:220px'" class="project-image-thumbnail img-responsive"
+                                         ng-src="/api/Public/GetFileStream?filename={{data.ImagePath}}&id={{data.ProjectId}}&w=338&h=220">
+                                </div>
+                            </a>
+                            <div class="project-text-container">
+                                <p class="hidden" ng-bind="getFundingPercentage(data)"></p>
+                                <h4 class="limit-project-Title">
+                                    <span ng-bind="data.ProjectTitle" />
+                                </h4>
+                                <p class="project-description limit-project-description" ng-bind-html="data.ShortDescription"></p>
+                                <div class="name-responsive-container">
+                                    <p class="project-username">
+                                        <img onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 30px; height:30px'" class="project-image-thumbnail img-circle"
+                                             ng-src="/api/Public/GetFileStream?filename={{data.UserImage}}&id=0&w=30&h=30"> <span ng-bind="data.UserName" />
+                                    </p>
+                                    <p class="project-category"><i class="fa fa-tags"></i> <span ng-bind="data.Industry.Name" /></p>
+
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:{{TotalFundingInPercent}}"></div>
+                                    </div>
+                                    <div class="project-footer">
+                                        <p class="pull-left"><i class="fa fa-line-chart"></i> <span class="value-detail" ng-bind="TotalFundingInPercent"></span> Completed</p>
+                                        <p class="pull-right"><i class="fa fa-calendar"></i> <span class="value-detail" ng-bind="data.FundingDuration" /> Days to go</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="project-details-button-container">
+                            <a href="#projectdetail/{{data.ProjectId}}" class="project-details-button">Know More</a>
+                        </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center load-more-button">
+                        <a href="#" class="hvr-float-shadow" ng-show="ShowFeaturedLoadMore" ng-click="loadMoreFeaturedProjects($event)" data-style="expand-right" data-size="l">Load More</a>
+                    </div>
+                </div>
+                <!--<div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <input type="button" ng-show="ShowLoadMore" ng-click="loadMoreProjects($event)" class="btn btn-peacock center-block ladda-button center-button" value="Load More" data-style="expand-right" data-size="l" />
+                </div>
+            </div>-->
+            </div>
+        </div>
+
+        <div class="projects" ng-if="NoProject==false">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 section-title2">
+                        <h3 class="section-titile2-head">More Projects</h3>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="center-block text-center text-danger" ng-show="Message">
+                        <img src="../../../images/error-chracter.png" width="40%">
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-6 project-block-wrapper" ng-repeat="data in ProjectList">
+                        <div class="project-block-container">
+                            <a href="#projectdetail/{{data.ProjectId}}" class="project-block-anchor">
+                                <div class="project-image-container" style="min-height: 220px;">
+                                    <img onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 338px; height:220px'" class="project-image-thumbnail img-responsive"
+                                         ng-src="/api/Public/GetFileStream?filename={{data.ImagePath}}&id={{data.ProjectId}}&w=338&h=220"> <!--&w=500&h=400--> <!--width="100%"-->
+                                </div>
+                            </a>
+                            <div class="project-text-container">
+                                <p class="hidden" ng-bind="getFundingPercentage(data)"></p>
+                                <h4 class="limit-project-Title">
+                                    <span ng-bind="data.ProjectTitle" />
+                                </h4>
+                                <p class="project-description limit-project-description" ng-bind-html="data.ShortDescription"></p>
+                                <div class="name-responsive-container">
+                                    <p class="project-username">
+                                        <img onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 30px; height:30px'" class="project-image-thumbnail img-circle"
+                                             ng-src="/api/Public/GetFileStream?filename={{data.UserImage}}&id=0&w=30&h=30"> <span ng-bind="data.UserName" />
+                                    </p>
+                                    <p class="project-category"><i class="fa fa-tags"></i> <span ng-bind="data.Industry.Name" /></p>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:{{TotalFundingInPercent}}"></div>
+                                    </div>
+                                    <div class="project-footer">
+                                        <p class="pull-left"><i class="fa fa-line-chart"></i> <span class="value-detail" ng-bind="TotalFundingInPercent"></span> Completed</p>
+                                        <p class="pull-right"><i class="fa fa-calendar"></i> <span class="value-detail" ng-bind="data.FundingDuration" /> Days to go</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="project-details-button-container">
+                            <a href="#projectdetail/{{data.ProjectId}}" class="project-details-button">Know More</a>
+                        </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center load-more-button">
+                        <a href="#" class="hvr-float-shadow" ng-show="ShowLoadMore" ng-click="loadMoreProjects($event)" data-style="expand-right" data-size="l">Load More</a>
+                    </div>
+                </div>
+                <!--<div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <input type="button" ng-show="ShowLoadMore" ng-click="loadMoreProjects($event)" class="btn btn-peacock center-block ladda-button center-button" value="Load More" data-style="expand-right" data-size="l" />
+                </div>
+            </div>-->
+            </div>
+        </div>
+    </div>
+    <div ng-if="NoFeaturedProject == true && NoProject == true">
+        <div class="projects" style="margin-top:80px">
+            <div class="container">
+                <div class="empty-project-container text-center hero-text">
+                    <img src="../../../images/error-chracter.png" width="40%">
+                    <p class="e-my-project-description">
+                        Sorry! no project is registered for investment against this Industry.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../Scripts/wow.js"></script>
+<script>
+    wow = new WOW(
+      {
+          animateClass: 'animated',
+          offset: 100,
+          callback: function (box) {
+              console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+          }
+      }
+    );
+    wow.init();
+    if (document.getElementById('moar') != null) {
+        document.getElementById('moar').onclick = function () {
+            var section = document.createElement('section');
+            section.className = 'section--purple wow fadeInDown';
+            this.parentNode.insertBefore(section, this);
+        };
+    }
+</script>
+<script src="../../Scripts/jquery.hoverdir.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(' #da-thumbs > li ').each(function () { $(this).hoverdir(); });
+    });
+</script>

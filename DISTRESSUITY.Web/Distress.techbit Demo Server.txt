@@ -1,0 +1,27 @@
+URL : http://distressuity.techbitsolution.com
+
+Client sql server
+server: 69.167.139.196
+database : techbit_db
+username: techbit_user
+Password: Hosting@123
+
+Old FTP : 
+server: techbitsolution.com
+username: distressuity
+Password: Hosting@123
+
+New FTP : 
+server : 108.170.39.162
+username: distress
+Password: Hosting@123
+
+
+
+URL(Domain) :  http://distressuity.techbitsolution.com
+
+
+LinkedIn(developer login) :
+Username : mohit.dhawan@techbitsolution.com
+Password : 123456
+App Name : Developer 

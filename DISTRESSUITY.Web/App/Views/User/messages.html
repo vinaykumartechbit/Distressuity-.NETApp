@@ -1,0 +1,192 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg3.jpg');
+        background-size: cover;
+    }
+</style>
+
+<div class="personal-messages" style="margin-top:80px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="message-window-container">
+                    <div class="panel panel-default message-panel">
+                        <div class="panel-heading message-panel-heading">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <i class="fa fa-comment-o"></i>
+                                    <h3>Conversations</h3>
+                                </div>
+                                <div class="col-md-8 sender-title-container">
+                                    <h3 ng-bind="findOpenedConversationUser(OpenedConversation)"></h3>
+                                    <h5>Company: <a href="#" prevent-default> {{OpenedConversation.ProjectModel.Title}}</a></h5>
+                                    <p>Project: <a href="#projectdetail/{{OpenedConversation.ProjectModel.ProjectId}}"> {{OpenedConversation.ProjectModel.ProjectTitle}}</a></p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-body message-panel-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="message-sidebar-container">
+                                        <div class="message-filter">
+                                            <select class="form-control" ng-model="selectedProject" ng-change="getConversationsByProjectId()"
+                                                    ng-options="conversation.ProjectModel.Title for conversation in DistinctConversation track by conversation.ProjectModel.ProjectId">
+                                                <option value="">All Project</option> <!--ng-click="getAllConversations()"-->
+                                            </select>
+                                        </div>
+                                        <div class="user-list">
+                                            <ul>
+                                                <li ng-repeat="conversation in Conversations" ng-class="{'active-message-li': selectedConversation == $index }">
+                                                    <a href="#" prevent-default class="text-color-dark-black trigger" ng-click="changeConversation(conversation.ConversationId, $index)">
+                                                        <div class="contact-content" bs-tooltip>
+                                                            <!--title="{{ToUserModel.FirstName}} {{ToUserModel.LastName}}  {{conversation.ProjectModel.Title}}"-->
+                                                            <!-- title="Provider {{provider}}" -->
+                                                            <!--<div class="li-tooltip-container">
+                                                                <p><strong>{{ToUserModel.FirstName}} {{ToUserModel.LastName}}</strong></p>
+                                                                <p>{{conversation.ProjectModel.Title}}</p>
+                                                            </div>-->
+                                                            <div class="row">
+                                                                <p class="hidden" ng-bind="FindToUser(conversation,$index)"></p>
+                                                                <!--<p class="hidden conversation-index">{{ConversationIndex}}</p>-->
+                                                                <div class="col-md-2">
+                                                                    <!--<img ng-src="/api/Public/GetFileStream?filename={{ToUserModel.PictureUrl}}&id=0&w=50&h=50">-->
+                                                                    <img class="user-image" ng-src="/api/Public/GetFileStream?filename={{ToUserModel.PictureUrl}}&id=0&w=50&h=50"
+                                                                         onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 50px; height:50px'"
+                                                                         alt="User Image">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="contact-sidebar-title">
+                                                                        <p class="limit-conversation-text a-black "><strong class="userName"> <!--<i class="fa fa-circle contact-online"></i>-->  {{ToUserModel.FirstName}} {{ToUserModel.LastName}}</strong></p>
+                                                                        <p class="limit-conversation-text projectTitle">{{conversation.ProjectModel.Title}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 text-right">
+                                                                    <p style="color: #898989; font-size:9px;" ng-bind="formatDateConversationsList(conversation)"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="pull-right position-relative message-notification-label margin-right-5">
+                                                                <!--<p class="label-info" ng-if="calculateUnreadMessages(conversation) > 0" ng-bind="calculateUnreadMessages(conversation)"></p>-->
+                                                                <p class="label-info" ng-if="conversation.UnreadMessages > 0" ng-bind="conversation.UnreadMessages"></p>
+                                                            </div>
+
+                                                            <div class="project-details">
+                                                                <p class="limit-conversation-text a-black">{{conversation.ConversationReplyModel[conversation.ConversationReplyModel.length - 1].Reply}}</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="messages-container">
+                                        <div class="message-top-content">
+                                            <div class="row text-center">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <p>
+                                                        <strong>Project : </strong>
+                                                        <a href="" prevent-default> {{OpenedConversation.ProjectModel.Title}}</a>
+                                                    </p>
+                                                </div>
+                                                <!--<div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <p><strong>Total Funding Required :</strong></p>
+                                                    <p>{{OpenedConversation.ProjectModel.InvestmentAmount}}</p>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <p><strong>Expires on :</strong></p>
+                                                    <p><span ng-bind="formatDate(OpenedConversation.ProjectModel.FundingDuration)"></span></p>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="widget" scroll-glue>
+                                            <ul class="list-group">
+                                                <!--<li class="list-group-item ">
+                                                    <a href="#" prevent-default ng-click="loadPreviousMessage()" ng-if="showReadMore"> Read More</a>
+                                                </li>-->
+                                                <li class="list-group-item" ng-repeat="conversationReply in OpenedConversation.ConversationReplyModel">
+                                                    <!--<div class="row">
+                                                        <div class="col-xs-12 col-md-2" ng-class="{'pull-right' : alignUserImage(conversationReply.UserModel)}">
+                                                            <img ng-src="/api/Public/GetFileStream?filename={{conversationReply.UserModel.PictureUrl}}&id=0&w=80&h=80"
+                                                                 class="img-circle img-responsive" alt="" style="float:left; margin-right:10px;" />
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-10">
+                                                            <div class="user-title">
+                                                                <a href="#" prevent-default class="text-color-dark-black">
+                                                                    {{conversationReply.UserModel.FirstName}} {{conversationReply.UserModel.LastName}}
+                                                                </a>
+                                                                <div class="mic-info">
+                                                                    <span ng-bind="formatDateTime(conversationReply.CreatedDate)"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="comment-text">
+                                                                <p class="text-color-dark-black text-justify">
+                                                                    <span ng-bind="conversationReply.Reply"></span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+                                                    <div class="sender-list-item" ng-if="!alignReplies(conversationReply.UserModel)">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-2 sender-image-container">
+                                                                <img ng-src="/api/Public/GetFileStream?filename={{conversationReply.UserModel.PictureUrl}}&id=0&w=80&h=80"
+                                                                     onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 60px; height:60px'"
+                                                                     class="img-circle img-responsive" alt="" style="float:left; margin-right:10px;" />
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-10">
+                                                                <div class="comment-text">
+                                                                    <pre ng-bind="conversationReply.Reply"> </pre>
+                                                                    <span class="message-time"><small ng-bind="formatDateTime(conversationReply.CreatedDate)"></small></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-item-reply" ng-if="alignReplies(conversationReply.UserModel)">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-10">
+                                                                <div class="comment-text">
+                                                                    <pre ng-bind="conversationReply.Reply"></pre>
+                                                                    <span class="message-time"><small ng-bind="formatDateTime(conversationReply.CreatedDate)"></small></span>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <img ng-src="/api/Public/GetFileStream?filename={{conversationReply.UserModel.PictureUrl}}&id=0&w=80&h=80"
+                                                                     onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 60px; height:60px'"
+                                                                     class="img-circle img-responsive" alt="" style="float:left; margin-right:10px;" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="message-reply-box">
+                                        <div class="col-xs-12 col-md-12">
+                                            <textarea class="form-control text-color-dark-black" style="resize:none" rows="4" ng-model="conversationReply.Reply" wrap="hard"></textarea>
+                                            <button class="btn btn-info pull-right ladda-button" ng-click="addConversationReply(OpenedConversation.ConversationId, $event)"
+                                                    data-style="expand-right" data-size="s"> Reply
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".contact-content").tooltip();
+
+        //$(".user-list li").tooltip({title: "<h1><strong>HTML</strong> inside <code>the</code> <em>tooltip</em></h1>", html: true,
+        //       placement : 'top'
+        //   });
+    });
+</script>

@@ -1,0 +1,223 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg3.jpg');
+        background-size: cover;
+    }
+</style>
+
+<div class="container payment-wrapper top-nav-fixed">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="payment-form-container">
+                <div class="row">
+                    <div class="section-title2 special-bg text-center">
+                        <h3>Payment Information</h3>
+                        <div class="heading-border"></div>
+                    </div>
+                    <div class="col-md-8">
+                        <form class="" name="PaymentInfo">
+                            <fieldset>
+                                <div class="payment-amount">
+                                    <div class="form-group">
+                                        <label>Total Payment</label>
+                                        <input class="form-control" type="text" name="FundingAmount" validator="required,minPledge" placeholder="Amount" 
+                                               ng-model="InitialPayment" ng-change="calculateFundingAmount()">
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clearboth" style="overflow:hidden">
+                                        <h3 class="panel-title pull-left" style="padding-top:9px">
+                                            Payment Details
+                                        </h3>
+                                        <div class="card-icons pull-right">
+                                            <ul>
+                                                <li class=""><img src="../../../Content/credit_card_debit_card_full_03.png" width="50"></li>
+                                                <li class=""><img src="../../../Content/credit_card_debit_card_full_05.png" width="50"></li>
+                                                <li class=""><img src="../../../Content/credit_card_debit_card_full_07.png" width="50"></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label for="cardNumber"> <i class="fa fa-credit-card"></i> Card Number* </label>
+                                            <input class="form-control creditCardNumber" type="text" name="CardNumber" validator="required, minCardLength,luhnCheck" placeholder="Valid Card Number"
+                                                   ng-model="Payment.CardNumber" id="credit_card" data-ng-pattern="/^[0-9]+$/" maxlength="19" ng-minlength="15"
+                                                   data-ng-credit-card required-error-message="Required" /> <!--data-ng-minlength="15"-->
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-5">
+                                                <div class="form-group">
+                                                    <label for="expityMonth">
+                                                        <i class="fa fa-user"></i> Name on Card*
+                                                    </label>
+                                                    <input class="form-control" type="text" name="Name" validator="required" required-error-message="Required" placeholder="NAME" ng-model="Payment.Name" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-5">
+                                                <div class="form-group">
+                                                    <label for="expityMonth">
+                                                        <i class="fa fa-calendar"></i> Expiry Date*
+                                                    </label>
+                                                    <div class="row">
+                                                        <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                            <select ng-options="item.id as item.id for item in Months" name="ExpirationMonth" ng-model="Payment.ExpirationMonth" validator="required" required-error-message="Required" class="form-control">
+                                                                <option value="" selected="selected">Month</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-6 col-lg-6 pl-ziro">
+                                                            <input class="form-control" type="text" name="ExpirationYear" maxlength="4" minlength="4" validator="required,numbersOnly,minYearValue,minDateValue" required-error-message="Required" placeholder="YYYY" ng-model="Payment.ExpirationYear" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <div class="form-group">
+                                                    <label for="cvCode">
+                                                        <i class="fa fa- fa-credit-card-alt"></i> CVV*
+                                                    </label>
+                                                    <input class="form-control" type="text" name="CardCVN" maxlenght="4" validator="required, minCVVValue" required-error-message="Required" placeholder="CVV" ng-model="Payment.CardCVN" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-pills nav-stacked">
+                                            <li class="active text-left">
+                                                <span class="badge pull-right" ng-bind="InitialPayment"></span> Initial Payment
+                                            </li>
+                                            <li class="active text-left">
+                                                <span class="badge pull-right" ng-bind="ProcessingFees"></span> Processing Fees
+                                            </li>
+                                            <li class="active text-left">
+                                                <span class="badge pull-right totalPayment" ng-bind="FinalPayment"></span> Final Payment
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            Billing Address
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <!-- Address form -->
+                                        <!-- full-name input-->
+                                        <div class="control-group">
+                                            <label class="control-label">Full Name*</label>
+                                            <div class="controls">
+                                                <input id="full-name" name="FullName" type="text" placeholder="full name" class="input-xlarge form-control"
+                                                       validator="required" required-error-message="Required" ng-model="Payment.BillingName">
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <!-- address-line1 input-->
+                                        <div class="control-group">
+                                            <label class="control-label">Address Line 1*</label>
+                                            <div class="controls">
+                                                <input id="address-line1" name="AddressLine1" type="text" placeholder="address line 1" class="input-xlarge form-control"
+                                                       validator="required" required-error-message="Required" ng-model="Payment.Address1">
+                                                <p class="help-block">Street address, P.O. box, company name, c/o</p>
+                                            </div>
+                                        </div>
+                                        <!-- address-line2 input-->
+                                        <div class="control-group">
+                                            <label class="control-label">Address Line 2</label>
+                                            <div class="controls">
+                                                <input id="address-line2" name="AddressLine2" type="text" placeholder="address line 2" class="input-xlarge form-control"
+                                                       ng-model="Payment.Address2">
+                                                <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <!-- city input-->
+                                                <div class="control-group">
+                                                    <label class="control-label">City / Town*</label>
+                                                    <div class="controls">
+                                                        <input id="city" name="City" type="text" placeholder="city" class="input-xlarge form-control"
+                                                               validator="required" required-error-message="Required" ng-model="Payment.City">
+                                                        <p class="help-block"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!-- postal-code input-->
+                                                <div class="control-group">
+                                                    <label class="control-label">Zip / Postal Code*</label>
+                                                    <div class="controls">
+                                                        <input id="postal-code" type="text" placeholder="zip or postal code" class="input-xlarge form-control"
+                                                               name="PostalCode" validator="required" required-error-message="Required" ng-model="Payment.PostalCode">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- region input-->
+                                        <div class="control-group">
+                                            <label class="control-label">State / Province / Region*</label>
+                                            <div class="controls">
+                                                <input id="region" name="Region" type="text" placeholder="state / province / region" class="input-xlarge form-control"
+                                                       validator="required" required-error-message="Required" ng-model="Payment.Region">
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                        <br />
+                        <!--<a href="#" class="btn btn-success btn-lg btn-block" role="button">Pay</a>-->
+                        <a href="javascript:Void(0)" ng-click="addPaymentInfo($event,Payment)" validation-submit="PaymentInfo" class="btn btn-success btn-lg btn-block ladda-button" data-style="expand-right" data-size="l">Invest</a>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="payment-sidebar-section">
+                            <label>About Item</label>
+                            <p class="about-project">
+                                A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar.
+                                It can change your ideas and experience.
+                                A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar. It can change your ideas and experience.
+                            </p>
+                            <p class="about-project">A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar. </p>
+                            <a href="#">Review Your Item</a>
+                        </div>
+                        <div class="payment-sidebar-section">
+                            <label>Project Title</label>
+                            <p class="about-project">
+                                A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar.
+                                It can change your ideas and experience.
+                                A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar. It can change your ideas and experience.
+                            </p>
+                            <p class="about-project">A book on leaning Guitar. It can change your ideas and experience.A book on leaning Guitar. </p>
+                            <a href="#">View More About Project</a>
+                        </div>
+                        <div class="payment-sidebar-section">
+                            <label>Frequently Asked Questions</label>
+                            <ul class="faq-list">
+                                <li><a href="#"> Frequently Asked Question 1</a></li>
+                                <li><a href="#"> Frequently Asked Question 2</a></li>
+                                <li><a href="#"> Frequently Asked Question 3</a></li>
+                                <li><a href="#"> Frequently Asked Question 4</a></li>
+                                <li><a href="#"> Frequently Asked Question 5</a></li>
+                                <li><a href="#"> Frequently Asked Question 6</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

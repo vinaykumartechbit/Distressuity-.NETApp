@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html ng-app="appDistressuity">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Distressuity</title>
+    <!-- Bootstrap -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    @*<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />*@
+
+    <link href="~/Content/loading-bar.css" rel="stylesheet" />
+    <link href="~/Content/MediaElement/mediaelementplayer.min.css" rel="stylesheet" />
+    <link href="~/Content/textAngular.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />*@
+    <link href="~/Content/angular-datepicker/angular-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/direction-aware.css" rel="stylesheet" />
+    <noscript><link rel="stylesheet" type="text/css" href="css/noJS.css" /></noscript>
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,400italic' rel='stylesheet' type='text/css'>
+    <style>
+        .wow {
+            visibility: hidden;
+        }
+    </style>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("/Scripts/jquery.signalR-2.2.0.min.js")
+    @Scripts.Render("/signalr/hubs")
+    @*@Scripts.Render("~/bundles/jquery.signalR")*@
+    <script src="~/Scripts/modernizr.custom.97074.js"></script>
+    <script src="~/Scripts/Pnotify/pnotify.custom.min.js"></script>
+    <script src="~/Scripts/MediaElement/mediaelement-and-player.js"></script>
+
+    <script src="~/Scripts/spin.min.js"></script>
+    <script src="~/Scripts/ladda.min.js"></script>
+
+    <script src="~/Scripts/vendor/angular-file-upload-shim.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Scripts/vendor/angular-file-upload.js"></script>
+    <script src="~/Scripts/loading-bar.js"></script>
+    <script src="../../../Scripts/angular-validation.js"></script>
+    <script src="../../../Scripts/angular-validation-rule.js"></script>
+    <script src="~/Scripts/Bootbox/bootbox.min.js"></script>
+  
+
+    @*<script src="~/Scripts/DateTimePicker/moment.min.js"></script>
+        <script src="~/Scripts/DateTimePicker/bootstrap-datetimepicker.js"></script>*@
+
+    <script src="~/Scripts/angular-datepicker/angular-datepicker.js"></script>
+
+    <script src="~/Scripts/angular-sanitize.min.js"></script>
+    @*<script src="~/Scripts/textAngular/textAngular-rangy.min.js"></script>*@
+    @*<script src="~/Scripts/textAngular/textAngular-sanitize.min.js"></script>*@
+    @*<script src="~/Scripts/textAngular/textAngular.min.js"></script>*@
+    <script src="../../../Scripts/NicEdit/nicEdit.js"></script>
+
+    <script src="~/App/app.js"></script>
+
+    @*<script type="text/javascript">
+        var accesstoken = "";
+        var authHeaders = {};
+    </script>*@
+
+    @* Load Directives *@
+    <script src="~/App/Directives/ngFile.js"></script>
+    <script src="~/App/Directives/preventDefault.js"></script>
+    <script src="~/App/Directives/scrollGlue.js"></script>
+    <script src="~/App/Directives/toolTip.js"></script>
+    @* End Loading Directives *@
+
+    @*Load Services *@
+    <script src="~/App/Services/authInterceptorService.js"></script>
+    <script src="~/App/Services/accountService.js"></script>
+    <script src="~/App/Services/userService.js"></script>
+    <script src="~/App/Services/projectService.js"></script>
+    <script src="~/App/Services/paymentService.js"></script>
+    <script src="~/App/Services/commonService.js"></script>
+    <script src="~/App/Services/messageService.js"></script>
+    <script src="~/App/Services/superAdminService.js"></script>
+    @* End Loading Services *@
+
+    @* Load Controllers *@
+    <script src="~/App/Controllers/mainController.js"></script>
+    <script src="~/App/Controllers/User/myProjectController.js"></script>
+    <script src="~/App/Controllers/User/myPaymentController.js"></script>
+    <script src="~/App/Controllers/Account/AccountController.js"></script>
+    <script src="~/App/Controllers/User/userController.js"></script>
+    <script src="~/App/Controllers/User/projectController.js"></script>
+    <script src="~/App/Controllers/homeController.js"></script>
+    <script src="~/App/Controllers/paymentController.js"></script>
+    <script src="~/App/Controllers/User/messagesController.js"></script>
+    <script src="~/App/Controllers/SuperAdmin/AllProjectsController.js"></script>
+    <script src="~/App/Controllers/SuperAdmin/ReportsController.js"></script>
+    <script src="~/App/Controllers/SuperAdmin/ProjectFundingController.js"></script>
+    @* End Loading Controllers *@
+
+
+    @*<link rel="stylesheet" href="css/bootstrap.min.css">*@
+
+    <link href="~/Content/Pnotify/pnotify.custom.min.css" rel="stylesheet" />
+    <link href="~/Content/ladda.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="images/favicon.png">
+</head>
+
+<body ng-controller="mainController">
+    
+
+    <div class="header navbar-fixed-top" ng-cloak>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <nav class="custom-nav navbar navbar-inverse">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <a class="navbar-brand" href="#"><img src="images/logo.png" width="150"></a>
+                                </div>
+                                <div class="collapse navbar-collapse" id="myNavbar">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6">
+                                            <ul class="nav navbar-nav">
+                                                <li ng-if="$root.userRole.toLowerCase() != 'admin'">
+                                                    <a class="newProject" href="#project"><strong>Start Your Idea</strong></a>
+                                                </li>
+                                                <li ng-if="$root.userRole.toLowerCase() == 'admin'">
+                                                    <a href="#allProjects"> All Projects</a>
+                                                </li>
+                                                <li class="dropdown">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <span ng-bind="SelectedIndustry"></span>
+                                                        <span class="caret"></span>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu navbar-ul-height">
+                                                        <li>
+                                                            <a href="" ng-click="filterProjectByIndustryId(0)">All</a>
+                                                        </li>
+                                                        <li ng-repeat="data in LayoutIndustries" class="border-top">
+                                                            <a href="" ng-click="filterProjectByIndustryId(data); SelectedIndustry = 'Test'">{{data.Name}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 col-sm-3">
+                                            <div class="logo text-center">
+                                                <a href="#/"><img src="images/logo.png" width="200"></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-3">
+                                            <ul class="nav navbar-nav navbar-right" data-ng-if="isAuthenticated.isAuth">
+                                               
+                                                <li>
+                                                    <a href="#messages">
+                                                        <span class="fa fa-bell"></span>
+                                                        <span class="new-messages-count" ng-if="$root.NewMessagesCount > 0" ng-bind="$root.NewMessagesCount"></span>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown user user-menu">
+                                                    <a href="#" prevent-default class="dropdown-toggle" data-toggle="dropdown">
+
+                                                        <img class="user-image" ng-src="/api/Public/GetFileStream?filename={{User.PictureUrl}}&id=0&w=35&h=35"
+                                                             onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 35px; height:35px'" data-toggle="dropdown"
+                                                             alt="User Image" role="button" aria-haspopup="true" aria-expanded="true">
+                                                        @*<span class="hidden-xs">User</span>*@
+                                                        <span class="caret"></span>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+
+                                                        <li class="user-header">
+                                                            <img class="img-circle" ng-src="/api/Public/GetFileStream?filename={{User.PictureUrl}}&id=0&w=100&h=100"
+                                                                 onerror="this.onerror = null; this.src = '/images/error-image.jpg'; this.style = 'width: 100px; height:100px'" data-toggle="dropdown"
+                                                                 role="button" aria-haspopup="true" aria-expanded="true">
+                                                            <p> Hi, {{User.FirstName}} {{User.LastName}}</p>
+                                                            <a href="#messages">Messages</a>
+                                                            <a href="#reports" ng-if="$root.userRole.toLowerCase() == 'admin'">Reports</a>
+                                                            <a href="#myprojects" ng-if="$root.userRole.toLowerCase() != 'admin'">My Projects</a>
+                                                            <a href="#mypayments" ng-if="$root.userRole.toLowerCase() != 'admin'">My Investments</a>
+                                                        </li>
+
+                                                        <li class="user-footer">
+                                                            <div class="pull-left">
+                                                                <a href="#profile" class="btn btn-default btn-flat">My Profile</a>
+                                                            </div>
+                                                            <div class="pull-right">
+                                                                <a href="#" prevent-default class="btn btn-default btn-flat" data-ng-click="logOut()">Sign Out</a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <ul class="nav navbar-nav navbar-right" data-ng-if="!isAuthenticated.isAuth">
+                                                <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                                <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                                            </ul>
+                                            <form class="navbar-form navbar-right" role="search" ng-show="$root.IsSearch">
+                                                <div class="input-group">
+
+                                                    <input type="text" class="form-control" ng-change="searchProjects();"
+                                                           ng-model="SearchProject" name="SearchProject"
+                                                           placeholder="Search Projects" autocomplete="off">
+                                                    <span class="input-group-btn">
+                                                        <button type="reset" class="btn btn-default" ng-click="clearSearch();">
+                                                            <span class="glyphicon glyphicon-remove">
+                                                                <span class="sr-only">Close</span>
+                                                            </span>
+                                                        </button>
+                                                        <button type="submit" class="btn btn-default" ng-click="clearSearch();">
+                                                            <span class="glyphicon glyphicon-search">
+                                                                <span class="sr-only">Search</span>
+                                                            </span>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="centerDiv">*@
+    <div ng-view="">
+        @RenderBody()
+    </div>
+    @*</div>*@
+
+    <div id="preloader" class="display-none">
+        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="footer-title">
+                        <p>About us</p>
+                    </div>
+                    <ul class="footer-ul">
+                        <li><a href="" prevent-default>What is Distressuity?</a></li>
+                        <li><a href="" prevent-default>Who we are</a></li>
+                        <li><a href="" prevent-default>Jobs</a></li>
+                        <li><a href="" prevent-default>Press</a></li>
+                        <li><a href="" prevent-default>Stats</a></li>
+                        <li><a href="" prevent-default>Newsletters</a></li>
+                        <li><a href="" prevent-default>Spotlight</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-md-3">
+
+                    <div class="footer-title">
+                        Dummy Title
+                    </div>
+                    <ul class="footer-ul">
+                        <li><a href="" prevent-default>Happening</a></li>
+                        <li><a href="" prevent-default>Company Blog</a></li>
+                        <li><a href="" prevent-default>Engineering Blog</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="news-letter">
+                        <div class="footer-title">
+                            <p>Subscribe Newsletter</p>
+                        </div>
+                        <form>
+                            <div class="row">
+                                <input type="email" class="col-md-8">
+                                <a href="#" class="btn btn-info col-md-3" prevent-default> Subsribe</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="footer-title">
+                        <p>Discover</p>
+                    </div>
+                    <ul class="footer-ul">
+                        <li><a href="" prevent-default>Art</a></li>
+                        <li><a href="" prevent-default>Comics</a></li>
+                        <li><a href="" prevent-default>Crafts</a></li>
+                        <li><a href="" prevent-default>Dance</a></li>
+                        <li><a href="" prevent-default>Design</a></li>
+                        <li><a href="" prevent-default>Fashion</a></li>
+                        <li><a href="" prevent-default>Film &amp; Video</a></li>
+                        <li><a href="" prevent-default>Food</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-title">
+                        Help
+                    </div>
+                    <ul class="footer-ul">
+                        <li><a href="" prevent-default>FAQ</a></li>
+                        <li><a href="" prevent-default>Our Rules</a></li>
+                        <li><a href="" prevent-default>Creator Handbook</a></li>
+                        <li><a href="" prevent-default>Campus New!</a></li>
+                        <li><a href="" prevent-default>Trust &amp; Safety</a></li>
+                        <li><a href="" prevent-default>Support</a></li>
+                        <li><a href="" prevent-default>Terms of Use</a></li>
+                        <li><a href="" prevent-default>Privacy Policy</a></li>
+                        <li><a href="" prevent-default>Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div class="footer-title">
+                        <p>Follow Us</p>
+                    </div>
+                    <div class="social-icons">
+                        <ul class="social-network social-circle">
+                            <li><a href="#" prevent-default class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#" prevent-default class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" prevent-default class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" prevent-default class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#" prevent-default class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row" style="border-top:1px solid #a8a8a8">
+                <div class="col-md-12">
+                    <div class="site-links pull-left">
+                        <ul>
+                            <li><a href="#" prevent-default>Terms of Use</a></li>
+                            <li><a href="#" prevent-default>Privacy Policy</a></li>
+                            <li><a href="#" prevent-default>Cookie Policy</a></li>
+                            <li><a href="#" prevent-default>Partner Terms</a></li>
+                        </ul>
+                    </div>
+                    <div class="copyrights pull-right">
+                        <p><i class="fa fa-copyright"></i> 2016 Distressuity, Inc. All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @RenderSection("scripts", required: false)
+    <script src="../../Scripts/site.js"></script>
+</body>
+</html>
+

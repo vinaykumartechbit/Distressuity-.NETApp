@@ -1,0 +1,119 @@
+﻿
+<div class="detailes-section-container" ng-cloak>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="tab-description tab-description-aaa active">
+                    <h3 style="">List Of All Projects</h3>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" ng-change="searchadminprojects($event);"
+                           ng-model="SearchProject" name="SearchProject"
+                           placeholder="Search by project name" autocomplete="off">
+                    <!--<button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search">
+                            <span class="sr-only">Search</span>
+                        </span>
+                    </button>-->
+                </div>
+                <div class="col-md-6 tab-description tab-description-aaa active">
+                    <select class="form-control" ng-model="selectedStatus" ng-change="searchadminprojects($event);"
+                            ng-options="status.Name for status in statusList track by status.StatusId">
+                        <option value="">All Project</option> <!--ng-click="getAllConversations()"-->
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12 no-project-found-admin" ng-if="NoProjectFound == true">
+                <div class="col-md-12">
+                    <div class="empty-project-container text-center">
+                        <img src="../../../images/error-chracter.png" width="40%">
+                        <!--<p class="hero-text">No project found for this search</p>-->
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="NoProjectFound == false">
+                <div class="table-responsive margin-top-25">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th width="15%">Image</th>
+                                <th width="15%">Project Name</th>
+                                <th width="15%">Owner</th>
+                                <th width="25%">Short Description</th>
+                                <th width="15%">Status</th>
+                                <th width="15%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="project in allProjects">
+                                <td width="15%">
+                                    <img class="user-image" ng-src="/api/Public/GetFileStream?filename={{project.ImagePath}}&id=0&w=100&h=100"
+                                         onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 100px; height:100px'" data-toggle="dropdown"
+                                         alt="User Image" role="button" aria-haspopup="true" aria-expanded="true">
+                                    <!--<img class="user-image" ng-src="{{project.ImagePath}}" width="100" height="100">-->
+                                </td>
+                                <td width="15%">
+                                    <strong>
+                                        <a href="#projectdetail/{{project.ProjectId}}">
+                                            <span class="user-data" ng-bind="project.ProjectTitle"></span>
+                                        </a>
+                                    </strong>
+                                </td>
+                                <td width="15%">
+                                     <span ng-bind="project.User.FirstName" /> <span ng-bind="project.User.LastName" />
+                                </td>
+                                <td width="25%"><span ng-bind="project.ShortDescription"></span></td>
+                                <td width="15%"><span ng-bind="project.Status.Name"></span></td>
+                                <td width="15%">
+                                    <a href="#" prevent-default ng-click="UpdateProjectStatus(true,project.ProjectId,$index,project.User.Email)" class='btn btn-info btn-xs'
+                                       ng-if="project.StatusId == 4 || project.StatusId == 2">
+                                        <span class="fa fa-check"></span> Accept
+                                    </a>
+                                    <a href="#" validation-reset="declineMessageForm" prevent-default ng-click="openMessageWindow(false,project.ProjectId,$index,project.User.Email)" class="btn btn-danger btn-xs"
+                                       ng-if="project.StatusId == 4 || project.StatusId == 3">
+                                        <span class="fa fa-times"></span> Decline
+                                    </a>
+                                    <!--false,project.ProjectId,$index-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-include="'/App/views/Pagination.html'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="declineMessageModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Message</h4>
+                    </div>
+                    <div class="hidden">
+                        <p class="value"></p> <!-- Approve/Disapprove -->
+                        <p class="projectId"></p>
+                        <p class="index"></p>
+                        <p class="userEmail"></p>
+                    </div>
+                    <form role="form" name="declineMessageForm" class="margin-top-10">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="abc">Resaon for disapproving project</label>
+                                <textarea class="form-control newPrivateMessage" placeholder="Your Message" wrap="hard" style="resize:none" rows="4" name="DeclineMessage"
+                                          required-error-message="Required" validator="required" ng-model="declineMessage" />
+                            </div>
+                        </div>
+                    </form>
+                    <div class="popup-footer-buttons">
+                        <a href="#" prevent-default validation-submit="declineMessageForm" ng-click="AddDecliningMessageForm($event)"
+                               data-style="expand-right" data-size="l" class="btn btn-success ladda-button">Submit</a>
+                        <a href="#" prevent-default value="Close" ng-click="CloseDecliningMessagePopup()" class="btn btn-danger" >Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

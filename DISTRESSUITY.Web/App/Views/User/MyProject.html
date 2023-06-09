@@ -1,0 +1,104 @@
+﻿<style type="text/css">
+    body {
+        background-image: url('../../../images/bg-main.jpg');
+        /*background-size: cover;*/
+    }
+</style>
+<div class="my-project-list" ng-cloak>
+    <div class="container" style="margin-top:80px">
+        <div class="row">
+            <div class="col-md-12 text-center tab-description" ng-if="!NoProjectAdded">
+                <h3>My Projects</h3>
+                <p>See a list of all your projects including active/deactive and pending for approval.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-6 project-block-wrapper" ng-repeat="data in MyProjects" ng-if="!NoProjectAdded">
+                <p class="hidden" ng-bind="getFundingPercentage(data)"></p>
+                <a href="#project/{{data.ProjectId}}">
+                    <div class="project-block-container">
+                        <div class="project-image-container hover14 project-block-anchor">
+                            <!--<img src="images/1.jpg" class="project-image-thumbnail" width="100%">-->
+                            <img onerror="this.onerror = null; this.src = '/images/superman.jpg'; this.style = 'width: 328px; height:220px'"
+                                 ng-src="/api/Public/GetFileStream?filename={{data.ImagePath}}&id={{data.ProjectId}}&w=328&h=220">
+                            <div class="image-overlay-text">
+                                <span>{{data.ProjectTitle}}</span>
+                            </div>
+                            <div class="delete-project-button">
+                                <a href="#" prevent-default class="btn btn-danger pull-right" ng-click="deleteProject(data)"> <i class="fa fa-trash "></i> </a>
+                            </div>
+                        </div>
+                        <div class="project-text-container">
+                            <h4>
+                                <div class="limit-project-Title">
+                                    <span ng-bind="data.ProjectTitle" />
+                                </div>
+                                <!--<a href="#" class="btn btn-danger pull-right" ng-click="deleteProject(data)">
+                            <i class="fa fa-trash "></i> | Delete
+                        </a>-->
+                            </h4>
+                            <div class="clearfix"></div>
+                            <p class="project-description limit-project-description margin-top-5">
+                                <span ng-bind="data.ShortDescription" />
+                            </p>
+                            <p><i class="fa fa-tags"></i> <span ng-bind="data.Industry.Name" /></p>
+                            <p>
+                                <i class="fa fa-hourglass-o"></i>
+
+                                <span class="label label-danger" ng-if="data.StatusId == 1" ng-bind="data.Status.Name" />
+                                <span class="label label-danger" ng-if="data.StatusId == 2" ng-bind="data.Status.Name" />
+                                <span class="label label-success" ng-if="data.StatusId == 3" ng-bind="data.Status.Name" />
+                                <span class="label label-warning" ng-if="data.StatusId == 4" ng-bind="data.Status.Name" />
+
+                            </p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+                                     aria-valuemax="100" style="width:{{TotalFundingInPercent}}"></div>
+                            </div>
+                            <div class="project-footer">
+                                <p class="pull-left"><i class="fa fa-line-chart"></i> <span ng-bind="TotalFundingInPercent" /> Completed</p>
+                                <p class="pull-right" ng-if="data.StatusId == 3"><i class="fa fa-calendar"></i> <span ng-bind="data.FundingDuration" /> Days to go</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div ng-if="NoProjectAdded">
+                <div class="col-md-12">
+                    <div class="empty-project-container text-center">
+                        <img src="../../../images/error-chracter.png" width="40%">
+                        <p class="hero-text">You have not added any projects so far</p>
+                        <a href="#project" class="btn btn-info e-add-project-btn">
+                            Add Projects
+                        </a>
+                        <p class="e-my-project-description">
+                            A project represent a business idea and make
+                            sure you add full details including any video, images, equity offered and total funding required.
+                            Investors are interested to see you ideas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!NoProjectAdded && MyProjects.length==0">
+                <div class="col-md-12">
+                    <div class="empty-project-container text-center">
+                        <img src="../../../images/error-chracter.png" width="40%">
+                        <!--<p class="hero-text">No project found for this search</p>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center load-more-button">
+                <a href="" ng-show="ShowLoadMore" ng-click="loadMoreProjects($event)" class="hvr-float-shadow ladda-button" data-style="expand-right" data-size="l">Load More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

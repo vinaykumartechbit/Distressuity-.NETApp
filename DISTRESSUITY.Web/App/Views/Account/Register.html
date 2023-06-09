@@ -1,0 +1,110 @@
+﻿<style type="text/css">
+    body {
+        background-position: 0 -353px;
+        background-image: url('../../../images/login-bg.jpg');
+        background-size: cover;
+    }
+</style>
+
+
+<div class="container login-screen min-height-login-signup">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="active">Sign Up</span>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="register-form" action="" method="post" role="form" name="signUpForm">
+                                <div class="form-group">
+                                    <input type="text" tabindex="1" class="form-control" placeholder="First Name" name="FirstName" ng-model="User.FirstName"
+                                           required-error-message="Required" validator="required,nameMinLength,nameMaxLength">
+                                </div>
+                                <div class="form-group">
+                                    <!--<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">-->
+                                    <input type="text" tabindex="1" class="form-control" placeholder="Last Name" name="LastName" ng-model="User.LastName"
+                                           required-error-message="Required" validator="required,nameMinLength,nameMaxLength">
+                                </div>
+                                <div class="form-group">
+                                    <!--<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">-->
+                                    <input type="email" tabindex="2" class="form-control" placeholder="Email" name="Email" ng-model="User.Email"
+                                           required-error-message="Required" validator="required,email">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <button type="submit" ng-click="createUser($event)" validation-submit="signUpForm" class="form-control btn btn-register ladda-button"
+                                               data-style="expand-right" data-size="l">Register Now</button>
+                                            <!--<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register ladda-button"
+                                            value="Register Now" ng-click="createUser($event)" validation-submit="signUpForm" data-style="expand-right" data-size="l">-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="text-center">
+                                                Already Have An Account <a href="#login" tabindex="5" class="text-info" id="login-form-link-bottom">Sign In</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!--<div class="page-content">
+    <div class="container">
+        <div class="panel panel-blue-theme panel-login">
+            <div class="panel-heading"><h4><i class="fa fa-lock"></i>Sign up</h4></div>
+            <div class="panel-body">
+                <form name="signUpForm">
+                    <div class="form-group">
+                        <label class="text-normal">First Name</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user icolor"></i></span>
+                            <input class="form-control" placeholder="First Name" name="FirstName" ng-model="User.FirstName" required-error-message="Required" validator="required,nameMinLength,nameMaxLength" type="text">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal">Last Name</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user icolor"></i></span>
+                            <input class="form-control" placeholder="Last Name" name="LastName" ng-model="User.LastName" required-error-message="Required" validator="required,nameMinLength,nameMaxLength" type="text">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="text-normal">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o icolor"></i></span>
+                            <input class="form-control" placeholder="Email" name="Email" ng-model="User.Email" required-error-message="Required" validator="required,email" type="text">
+                        </div>
+                    </div>
+
+                    <a type="button" ng-click="createUser($event)" validation-submit="signUpForm" class="btn  btn-peacock btn-md pull-right ladda-button" data-style="expand-right" data-size="l">
+                        Signup
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>-->
